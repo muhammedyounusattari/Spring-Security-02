@@ -7,6 +7,8 @@ import javax.servlet.ServletRegistration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -24,6 +26,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @ComponentScan(basePackages={"younus.attari.config","younus.attari.controller"})
 @EnableWebSecurity
 @EnableWebMvc
+@PropertySources({ @PropertySource("classpath:mymessages.properties") })
 public class MainConfigurationClass extends WebSecurityConfigurerAdapter implements WebApplicationInitializer {
 
 	
@@ -51,8 +54,13 @@ public class MainConfigurationClass extends WebSecurityConfigurerAdapter impleme
 		http.authorizeRequests()
 		.antMatchers("/proxy","/ui","/scripts","/webjars/**", "/data","/css").permitAll()
 		.antMatchers("/login","/logout","/home","/").hasAnyRole("USER","ADMIN")
-		.and().formLogin().loginPage("/loginUrl").and().exceptionHandling().accessDeniedPage("/accessDenied")
-		.and().logout().logoutUrl("/logoutUrl");
+		.and().formLogin().loginPage("/login.jsp").loginProcessingUrl("/app")
+//		.usernameParameter("username") //by default it will be added
+//		.passwordParameter("password") //by default it will be added
+		.defaultSuccessUrl("/home")
+		.failureUrl("/login.jsp?error=1")
+		.and().exceptionHandling().accessDeniedPage("/accessDenied")
+		.and().logout().logoutUrl("/logoutUrl").and().csrf().disable();
 		
 	}
 

@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class MainClassController {
 
-	@RequestMapping(value={"/loginUrl","/hello","/"})
-	public String loginRequest(HttpServletRequest request){
-		System.out.println("this is from /login request");
-		return "login";
+
+	@RequestMapping(value="/welcome", method=RequestMethod.POST)
+	public void landingPage(){
+		//SpringCon
 	}
 	
 	@RequestMapping(value="/logoutUrl", method=RequestMethod.GET)
