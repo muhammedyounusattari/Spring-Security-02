@@ -60,7 +60,8 @@ public class MainConfigurationClass extends WebSecurityConfigurerAdapter impleme
 		.defaultSuccessUrl("/home")
 		.failureUrl("/login.jsp?error=1")
 		.and().exceptionHandling().accessDeniedPage("/accessDenied")
-		.and().logout().logoutUrl("/logoutUrl").and().csrf().disable();
+		.and().logout().logoutUrl("/logoutUrl").logoutSuccessUrl("/login.jsp").
+		and().csrf().disable();
 		
 	}
 
